@@ -1,14 +1,36 @@
 import bpy
+import json
 from . exporters import transform
 
-def write_some_data(context, filepath, use_some_setting):
-    print("running write_some_data...")
-    f = open(filepath, 'w', encoding='utf-8')
-    f.write("Hello World %s" % use_some_setting)
-    f.close()
+def write_json(context, filepath, object, animType, id, looping, resetWhenDone):
+    # identify correct export type and get frames
+    if animType == 'TRANSFORM':
+        frames = transform.write_animation(context, object, id, looping, resetWhenDone)
+        typeLabel = "transform"
+    else:
+        print("Unknown animation type "+animType)
 
+    # add metadata
+    animation = {
+        "name":"remove this slot",
+        "type":typeLabel,
+        "id":id,
+        "looping":looping,
+        "resetWhenDone":resetWhenDone,
+        "frames":frames,
+        "commands":[]
+    }
+
+    # create json string
+    formatted = json.dumps(animation, sort_keys=True, indent=4, separators=(',', ': '))
+
+    # write file
+    file = open(filepath, 'w')
+    file.write(formatted)
+    file.close
+
+    print("Wrote to "+filepath)
     return {'FINISHED'}
-
 
 # ExportHelper is a helper class, defines filename and
 # invoke() function which calls the file selector.
@@ -33,6 +55,13 @@ class MC_Export_Operator(Operator, ExportHelper):
 
     # List of operator properties, the attributes will be assigned
     # to the class instance from the operator settings before calling.
+    animType = EnumProperty(
+        name="Type",
+        description="Animation type to export",
+        items={('TRANSFORM','Transform', 'Basic transform animation (no roll)')},
+        default='TRANSFORM'
+    )
+
     looping = BoolProperty(
         name="Looping",
         description="Should this animation loop?",
@@ -52,7 +81,7 @@ class MC_Export_Operator(Operator, ExportHelper):
         )
 
     def execute(self, context):
-        return write_some_data(context, self.filepath, self.use_setting)
+        return write_json(context, self.filepath, context.view_layer.objects.active, self.animType, int(self.id), self.looping, self.resetWhenDone)
 
 
 # Only needed if you want to add into a dynamic menu
