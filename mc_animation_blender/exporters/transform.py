@@ -15,10 +15,17 @@ def write_animation(context, object, id, looping, resetWhenDone):
 def write_frame(context, object, frame):
     context.scene.frame_set(frame)
 
-    # Account for difference in up axis between Minecraft and Blender
+    # Account for difference in axes between Minecraft and Blender
     location = [object.location.x, object.location.z, object.location.y]
-    # Account for different rotation values in Minecraft and Blender
-    rotation = [math.degrees(object.rotation_euler.z)*-1, math.degrees(object.rotation_euler.x)]
+    xrot = math.degrees(object.rotation_euler.z)*-1
+    
+    # Cameras have to be rotated down 90 degrees
+    if object.type=='CAMERA':
+        yrot = (math.degrees(object.rotation_euler.x)-90)*-1
+    else:
+        yrot = math.degrees(object.rotation_euler.x)*-1
+    
+    rotation = [xrot,yrot]
 
     frame = {
         "loc":location,
