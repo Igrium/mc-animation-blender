@@ -90,7 +90,6 @@ def menu_func_export(self, context):
 
 
 def register():
-    print("registering anim export")
     bpy.utils.register_class(MC_Export_Operator)
     bpy.types.TOPBAR_MT_file_export.append(menu_func_export)
 

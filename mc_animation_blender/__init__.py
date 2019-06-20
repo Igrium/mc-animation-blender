@@ -25,10 +25,12 @@ bl_info = {
 import bpy
 
 from . import operator_export_json
+from . import operator_mc_transform
 
 def register():
-    print("registering mcanim")
     operator_export_json.register()
+    operator_mc_transform.register()
 
 def unregister():
     operator_export_json.unregister()
+    operator_mc_transform.unregister()
