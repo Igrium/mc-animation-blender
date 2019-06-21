@@ -24,5 +24,5 @@ def getTransform(context, object, startCoords):
     return (location, rotation)
 
 def convertLoc(coords):
-    return mathutils.Vector((coords.x*-1, coords.z, coords.y))
+    return mathutils.Vector((coords.x, coords.z, coords.y*-1))
 
