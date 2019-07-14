@@ -26,3 +26,11 @@ def getTransform(context, object, startCoords):
 def convertLoc(coords):
     return mathutils.Vector((coords.x, coords.z, coords.y*-1))
 
+# returns the rotation in euler, no matter what it was initially in 
+def get_rotation(input):
+    if input.rotation_mode == 'QUATERNION':
+        return input.rotation_quaternion.to_euler()
+    else:
+        return input.rotation_euler
+ 
+

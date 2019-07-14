@@ -1,14 +1,19 @@
 import bpy
 import json
 from . exporters import transform
+from . exporters import armature
 
 def write_json(context, filepath, object, animType, id, looping, resetWhenDone):
     # identify correct export type and get frames
     if animType == 'TRANSFORM':
         frames = transform.write_animation(context, object, id, looping, resetWhenDone)
         typeLabel = "transform"
+    elif animType == 'ARMATURE':
+        frames = armature.write_animation(context, object, id, looping, resetWhenDone)
+        typeLabel = "armature"
     else:
         print("Unknown animation type "+animType)
+        return {'CANCELED'}
 
     # add metadata
     animation = {
@@ -30,7 +35,7 @@ def write_json(context, filepath, object, animType, id, looping, resetWhenDone):
     file.close
 
     print("Wrote to "+filepath)
-    return {'FINISHED'}
+    return {'CANCELLED'}
 
 # ExportHelper is a helper class, defines filename and
 # invoke() function which calls the file selector.
@@ -58,7 +63,8 @@ class MC_Export_Operator(Operator, ExportHelper):
     animType = EnumProperty(
         name="Type",
         description="Animation type to export",
-        items={('TRANSFORM','Transform', 'Basic transform animation (no roll)')},
+        items={('TRANSFORM','Transform', 'Basic transform animation (no roll)'),
+         ('ARMATURE', 'Armature', 'Armor Stand animation (requires special rig)')},
         default='TRANSFORM'
     )
 
