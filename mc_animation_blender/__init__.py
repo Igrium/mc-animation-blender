@@ -26,11 +26,14 @@ import bpy
 
 from . import operator_export_json
 from . import operator_mc_transform
+from . import operator_add_armorstand
 
 def register():
     operator_export_json.register()
     operator_mc_transform.register()
+    operator_add_armorstand.register()
 
 def unregister():
     operator_export_json.unregister()
     operator_mc_transform.unregister()
+    operator_add_armorstand.unregister()
