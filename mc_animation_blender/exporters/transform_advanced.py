@@ -33,22 +33,8 @@ def write_frame(context, object, startCoords, frame):
 			"RightArm":[0,0,0],
 			"LeftLeg":[0,0,0],
 			"RightLeg":[0,0,0],
-			"Head":convert_array(transform_utils.get_rotation(object), True)
+			"Head":transform_utils.rotation_to_array(transform_utils.get_rotation(object), True)
         }
     }
 
     return frame
-
-# takes an array attained by armature.pose.bones[bone].rotation_euler, converts it to degrees, and does correct formulas.
-def convert_array(array, isHead):
-    
-    if isHead:
-        new_array = [array[0]*-1, array[1]*-1, array[2]]
-    else:
-        new_array = [array[2], array[1], array[0]*-1]  
-        
-    new_array[0] = round(math.degrees(new_array[0]), 2)
-    new_array[1] = round(math.degrees(new_array[1]), 2)
-    new_array[2] = round(math.degrees(new_array[2]), 2)
-    
-    return new_array
