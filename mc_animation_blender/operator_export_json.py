@@ -4,7 +4,7 @@ from . exporters import transform
 from . exporters import armature
 from . exporters import transform_advanced
 
-def write_json(context, filepath, object, animType, id, looping, resetWhenDone):
+def write_json(context, filepath, object, animType, id, looping, resetWhenDone, exportCommands):
     # identify correct export type and get frames
     if animType == 'TRANSFORM':
         frames = transform.write_animation(context, object, id, looping, resetWhenDone)
@@ -19,6 +19,20 @@ def write_json(context, filepath, object, animType, id, looping, resetWhenDone):
         print("Unknown animation type "+animType)
         return {'CANCELED'}
 
+    # add commands
+    commands = []
+
+    if exportCommands:
+        # get all timeline markers and iterate over keys
+        markers = context.scene.timeline_markers
+        for k in markers.keys():
+            # only add if marker starts with '/'
+            if k[:1] == '/':
+                commands.append({
+                    "frame":markers[k].frame-context.scene.frame_start,
+                    "contents":k[1:]
+                })
+
     # add metadata
     animation = {
         "name":"remove this slot",
@@ -27,7 +41,7 @@ def write_json(context, filepath, object, animType, id, looping, resetWhenDone):
         "looping":looping,
         "resetWhenDone":resetWhenDone,
         "frames":frames,
-        "commands":[]
+        "commands":commands
     }
 
     # create json string
@@ -90,9 +104,22 @@ class MC_Export_Operator(Operator, ExportHelper):
         description="Unique numerical ID that Minecraft will refer to this animation by",
         default='0',
         )
+    
+    exportCommands = BoolProperty(
+        name="Export Commands",
+        description="Export markers starting with '/' as commands",
+        default=True
+    )
 
     def execute(self, context):
-        return write_json(context, self.filepath, context.view_layer.objects.active, self.animType, int(self.id), self.looping, self.resetWhenDone)
+        return write_json(context, 
+        self.filepath, 
+        context.view_layer.objects.active, 
+        self.animType, 
+        int(self.id), 
+        self.looping, 
+        self.resetWhenDone, 
+        self.exportCommands)
 
 
 # Only needed if you want to add into a dynamic menu
