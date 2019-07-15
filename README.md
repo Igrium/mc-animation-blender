@@ -3,7 +3,7 @@ The Minecraft animation system is a set of programs designed to let you animate 
 
 ## Installation
 
-To install, click on "Clone or download" and then click "Download ZIP". Then, in Blender, go to the addons tab in User Preferences, click "Install Add-on from File..." and locate the zip you downloaded.
+To install, go to the Releases tab and download the latest release. Then, in Blender, go to the addons tab in User Preferences, click "Install Add-on from File..." and locate the zip you downloaded.
 
 ## Contact
 
