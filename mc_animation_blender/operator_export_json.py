@@ -2,6 +2,7 @@ import bpy
 import json
 from . exporters import transform
 from . exporters import armature
+from . exporters import transform_advanced
 
 def write_json(context, filepath, object, animType, id, looping, resetWhenDone):
     # identify correct export type and get frames
@@ -10,6 +11,9 @@ def write_json(context, filepath, object, animType, id, looping, resetWhenDone):
         typeLabel = "transform"
     elif animType == 'ARMATURE':
         frames = armature.write_animation(context, object, id, looping, resetWhenDone)
+        typeLabel = "armature"
+    elif animType == 'TRANSFORM_ADVANCED':
+        frames = transform_advanced.write_animation(context, object, id, looping, resetWhenDone)
         typeLabel = "armature"
     else:
         print("Unknown animation type "+animType)
@@ -64,7 +68,8 @@ class MC_Export_Operator(Operator, ExportHelper):
         name="Type",
         description="Animation type to export",
         items={('TRANSFORM','Transform', 'Basic transform animation (no roll)'),
-         ('ARMATURE', 'Armature', 'Armor Stand animation (requires special rig)')},
+         ('ARMATURE', 'Armature', 'Armor Stand animation (requires special rig)'),
+         ('TRANSFORM_ADVANCED', 'Advanced Transform', 'More advanced transform w/ roll (uses armor stands)')},
         default='TRANSFORM'
     )
 
