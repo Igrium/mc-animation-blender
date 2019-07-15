@@ -18,7 +18,7 @@ bl_info = {
     "blender" : (2, 80, 0),
     "version" : (0, 0, 1),
     "location" : "View3D",
-    "warning" : "",
+    "warning" : "This addon is still in development.",
     "category" : "Import-Export"
 }
 
