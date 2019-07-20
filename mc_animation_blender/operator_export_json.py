@@ -3,6 +3,7 @@ import json
 from . exporters import transform
 from . exporters import armature
 from . exporters import transform_advanced
+from . exporters import command_only
 
 def write_json(context, filepath, object, animType, id, looping, resetWhenDone, exportCommands):
     # identify correct export type and get frames
@@ -15,6 +16,9 @@ def write_json(context, filepath, object, animType, id, looping, resetWhenDone, 
     elif animType == 'TRANSFORM_ADVANCED':
         frames = transform_advanced.write_animation(context, object, id, looping, resetWhenDone)
         typeLabel = "armature"
+    elif animType == 'COMMAND_ONLY':
+        frames = command_only.write_animation(context)
+        typeLabel = "command_only"
     else:
         print("Unknown animation type "+animType)
         return {'CANCELED'}
@@ -83,7 +87,8 @@ class MC_Export_Operator(Operator, ExportHelper):
         description="Animation type to export",
         items={('TRANSFORM','Transform', 'Basic transform animation (no roll)'),
          ('ARMATURE', 'Armature', 'Armor Stand animation (requires special rig)'),
-         ('TRANSFORM_ADVANCED', 'Advanced Transform', 'More advanced transform w/ roll (uses armor stands)')},
+         ('TRANSFORM_ADVANCED', 'Advanced Transform', 'More advanced transform w/ roll (uses armor stands)'),
+         ('COMMAND_ONLY', 'Command Only', 'Only export animation commands')},
         default='TRANSFORM'
     )
 
