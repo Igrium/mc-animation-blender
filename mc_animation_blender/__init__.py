@@ -18,17 +18,22 @@ bl_info = {
     "blender" : (2, 80, 0),
     "version" : (0, 1, 0),
     "location" : "View3D",
-    "warning" : "",
+    "warning" : "This addon is still in development.",
     "category" : "Import-Export"
 }
 
 import bpy
 
 from . import operator_export_json
+from . import operator_mc_transform
+from . import operator_add_armorstand
 
 def register():
-    print("registering mcanim")
     operator_export_json.register()
+    operator_mc_transform.register()
+    operator_add_armorstand.register()
 
 def unregister():
     operator_export_json.unregister()
+    operator_mc_transform.unregister()
+    operator_add_armorstand.unregister()
