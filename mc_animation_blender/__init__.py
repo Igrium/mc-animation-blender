@@ -16,7 +16,7 @@ bl_info = {
     "author" : "Igrium",
     "description" : "Tools for animation in adventure maps",
     "blender" : (2, 80, 0),
-    "version" : (0, 0, 1),
+    "version" : (0, 1, 0),
     "location" : "View3D",
     "warning" : "",
     "category" : "Import-Export"
