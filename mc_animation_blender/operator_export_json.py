@@ -89,7 +89,7 @@ class MC_Export_Operator(Operator, ExportHelper):
          ('ARMATURE', 'Armature', 'Armor Stand animation (requires special rig)'),
          ('TRANSFORM_ADVANCED', 'Advanced Transform', 'More advanced transform w/ roll (uses armor stands)'),
          ('COMMAND_ONLY', 'Command Only', 'Only export animation commands')},
-        default='TRANSFORM'
+        default='ARMATURE'
     )
 
     looping = BoolProperty(
