@@ -30,7 +30,7 @@ def write_frame(context, object, startCoords, frame):
     right_arm_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['right_arm']), False)
     left_leg_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['left_leg']), False)
     right_leg_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['right_leg']), False)
-    head_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['head']))
+    head_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['head']), False)
     
     # construct frame
     frame = {
