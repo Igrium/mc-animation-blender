@@ -25,12 +25,12 @@ def write_frame(context, object, startCoords, frame):
     # get all the bones in the armature
     bones = object.pose.bones
 
-    body_v = rotation_to_array(transform_utils.get_rotation(bones['body']))
-    left_arm_v = rotation_to_array(transform_utils.get_rotation(bones['left_arm']))
-    right_arm_v = rotation_to_array(transform_utils.get_rotation(bones['right_arm']))
-    left_leg_v = rotation_to_array(transform_utils.get_rotation(bones['left_leg']))
-    right_leg_v = rotation_to_array(transform_utils.get_rotation(bones['right_leg']))
-    head_v = rotation_to_array(transform_utils.get_rotation(bones['head']))
+    body_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['body']), True)
+    left_arm_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['left_arm']), False)
+    right_arm_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['right_arm']), False)
+    left_leg_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['left_leg']), False)
+    right_leg_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['right_leg']), False)
+    head_v = transform_utils.rotation_to_array(transform_utils.get_rotation(bones['head']))
     
     # construct frame
     frame = {
